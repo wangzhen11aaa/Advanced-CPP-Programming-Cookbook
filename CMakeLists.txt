@@ -29,14 +29,13 @@ project(book)
 # ------------------------------------------------------------------------------
 # Chapters
 # ------------------------------------------------------------------------------
-
 include(ExternalProject)
 
 # ------------------------------------------------------------------------------
 # Helper
 # ------------------------------------------------------------------------------
-
 function(add_chapter name)
+    message("SOURCE_DIR: ${CMAKE_SOURCE_DIR}")
     ExternalProject_Add(
         ${name}
         SOURCE_DIR ${CMAKE_SOURCE_DIR}/${name}
@@ -47,17 +46,17 @@ endfunction(add_chapter)
 # ------------------------------------------------------------------------------
 # Chapters
 # ------------------------------------------------------------------------------
+add_chapter(Chapter01)
+add_chapter(Chapter02)
+add_chapter(Chapter03)
+add_chapter(Chapter04)
+add_chapter(Chapter05)
+add_chapter(Chapter06)
 
-add_chapter(chapter01)
-add_chapter(chapter02)
-add_chapter(chapter03)
-add_chapter(chapter04)
-add_chapter(chapter05)
-add_chapter(chapter06)
-add_chapter(chapter07)
-add_chapter(chapter08)
-add_chapter(chapter09)
-add_chapter(chapter10)
-add_chapter(chapter11)
-add_chapter(chapter12)
-add_chapter(chapter13)
+add_chapter(Chapter07)
+add_chapter(Chapter08)
+add_chapter(Chapter09)
+add_chapter(Chapter10)
+add_chapter(Chapter11)
+add_chapter(Chapter12)
+add_chapter(Chapter13)
