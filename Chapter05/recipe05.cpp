@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,49 +22,43 @@
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
+#include <iostream>
 #include <mutex>
 #include <stack>
-#include <iostream>
 
 std::mutex m{};
 
-template<typename S, typename T>
-void push(S &s, T &&t)
-{
-    std::lock_guard lock(m);
-    s.push(std::forward<T>(t));
+template <typename S, typename T> void push(S &s, T &&t) {
+  std::lock_guard lock(m);
+  s.push(std::forward<T>(t));
 }
 
-template<typename S>
-void pop(S &s)
-{
-    std::lock_guard lock(m);
-    s.pop();
+template <typename S> void pop(S &s) {
+  std::lock_guard lock(m);
+  std::cout << s.top() << " out \n";
+  s.pop();
 }
 
-template<typename S>
-auto empty(S &s)
-{
-    std::lock_guard lock(m);
-    return s.empty();
+template <typename S> auto empty(S &s) {
+  std::lock_guard lock(m);
+  return s.empty();
 }
 
-int main(void)
-{
-    std::stack<int> mystack;
+int main(void) {
+  std::stack<int> mystack;
 
-    push(mystack, 4);
-    push(mystack, 8);
-    push(mystack, 15);
-    push(mystack, 16);
-    push(mystack, 23);
-    push(mystack, 42);
+  push(mystack, 4);
+  push(mystack, 8);
+  push(mystack, 15);
+  push(mystack, 16);
+  push(mystack, 23);
+  push(mystack, 42);
 
-    while(empty(mystack)) {
-        pop(mystack);
-    }
+  while (!empty(mystack)) {
+    pop(mystack);
+  }
 
-    return 0;
+  return 0;
 }
 
 #endif

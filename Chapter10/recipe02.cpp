@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,38 +24,31 @@
 
 #include <array>
 #include <atomic>
-#include <thread>
 #include <iostream>
-
+#include <memory>
+#include <thread>
 std::atomic<int> count;
 
-void
-inc(std::shared_ptr<int> val)
-{
-    count += *val;
+void inc(std::shared_ptr<int> val) { count += *val; }
+
+void execute_threads(std::unique_ptr<int> ptr) {
+  std::array<std::thread, 42> threads;
+  auto shared = std::shared_ptr<int>(std::move(ptr));
+
+  for (auto &thread : threads) {
+    thread = std::thread{inc, shared};
+  }
+
+  for (auto &thread : threads) {
+    thread.join();
+  }
 }
 
-void
-execute_threads(std::unique_ptr<int> ptr)
-{
-    std::array<std::thread, 42> threads;
-    auto shared = std::shared_ptr<int>(std::move(ptr));
+int main(void) {
+  execute_threads(std::make_unique<int>(1));
+  std::cout << "count: " << count << '\n';
 
-    for (auto &thread : threads) {
-        thread = std::thread{inc, shared};
-    }
-
-    for (auto &thread : threads) {
-        thread.join();
-    }
-}
-
-int main(void)
-{
-    execute_threads(std::make_unique<int>(1));
-    std::cout << "count: " << count << '\n';
-
-    return 0;
+  return 0;
 }
 
 // count: 42

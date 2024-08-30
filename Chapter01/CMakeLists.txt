@@ -31,13 +31,11 @@ set(CMAKE_CXX_STANDARD 17)
 # ------------------------------------------------------------------------------
 # Recipe 01
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe01_examples)
 
 function(example number)
     add_executable(recipe01_example${number} recipe01.cpp)
     target_compile_definitions(recipe01_example${number} PRIVATE EXAMPLE${number})
-    add_dependencies(recipe01_examples recipe01_example${number})
 endfunction(example)
 
 example(01)
@@ -53,13 +51,13 @@ example(09)
 # ------------------------------------------------------------------------------
 # Recipe 02
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe02_examples)
 
 function(example number)
     add_executable(recipe02_example${number} recipe02.cpp)
     target_compile_definitions(recipe02_example${number} PRIVATE EXAMPLE${number})
-    add_dependencies(recipe02_examples recipe02_example${number})
+
+    # add_dependencies(recipe02_examples recipe02_example${number})
 endfunction(example)
 
 example(01)
@@ -68,7 +66,6 @@ example(02)
 # ------------------------------------------------------------------------------
 # Recipe 03
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe03_examples)
 
 file(STRINGS "config.h" CONFIG_H)
@@ -80,7 +77,9 @@ list(APPEND MY_LIBRARY_SINGLE
     "${APIS_H}"
 )
 
+message("MY_LIBRARY_SINGLE: ${MY_LIBRARY_SINGLE}")
 file(REMOVE "my_library_single.h")
+
 foreach(LINE IN LISTS MY_LIBRARY_SINGLE)
     if(LINE MATCHES "#include \"")
         file(APPEND "my_library_single.h" "// ${LINE}\n")
@@ -92,7 +91,6 @@ endforeach()
 function(example number)
     add_executable(recipe03_example${number} recipe03.cpp)
     target_compile_definitions(recipe03_example${number} PRIVATE EXAMPLE${number})
-    add_dependencies(recipe03_examples recipe03_example${number})
 endfunction(example)
 
 example(01)
@@ -106,7 +104,6 @@ example(07)
 # ------------------------------------------------------------------------------
 # Recipe 04
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe04_examples)
 
 set(CMAKE_CXX_CLANG_TIDY clang-tidy)
@@ -122,7 +119,6 @@ example(01)
 # ------------------------------------------------------------------------------
 # Recipe 05
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe05_examples)
 
 function(example number)

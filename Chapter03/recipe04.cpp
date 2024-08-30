@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,68 +22,57 @@
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
-#include <vector>
 #include <iostream>
-
-class the_answer
-{
-    std::vector<int> m_answer;
-
-public:
-
-    the_answer() = default;
-
-    explicit the_answer(int answer) :
-        m_answer{{answer}}
-    { }
-
-    ~the_answer()
-    {
-        if (!m_answer.empty()) {
-            std::cout << "The answer is: " << m_answer.at(0) << '\n';
-        }
-    }
+#include <stdexcept>
+#include <vector>
+class the_answer {
+  std::vector<int> m_answer;
 
 public:
+  the_answer() = default;
 
-    the_answer(the_answer &&other) noexcept
-    {
-        *this = std::move(other);
+  explicit the_answer(int answer) : m_answer{{answer}} {}
+
+  ~the_answer() {
+    if (!m_answer.empty()) {
+      std::cout << "The answer is: " << m_answer.at(0) << '\n';
+    }
+  }
+
+public:
+  the_answer(the_answer &&other) noexcept { *this = std::move(other); }
+
+  the_answer &operator=(the_answer &&other) noexcept {
+    try {
+      m_answer.emplace(m_answer.begin(), other.m_answer.at(0));
+      other.m_answer.erase(other.m_answer.begin());
+    } catch (const std::exception &e) {
+      std::cout << e.what() << std::endl;
+      std::cout << "failed to move\n";
     }
 
-    the_answer &operator=(the_answer &&other) noexcept
-    {
-        try {
-            m_answer.emplace(m_answer.begin(), other.m_answer.at(0));
-            other.m_answer.erase(other.m_answer.begin());
-        }
-        catch(...) {
-            std::cout << "failed to move\n";
-        }
-
-        return *this;
-    }
+    return *this;
+  }
 };
 
-int main(void)
-{
-    {
-        the_answer is_42{};
-        the_answer is_what{};
+int main(void) {
+  {
+    the_answer is_42{};
+    the_answer is_what{};
 
-        is_what = std::move(is_42);
-    }
+    is_what = std::move(is_42);
+  }
 
-    std::cout << '\n';
+  std::cout << '\n';
 
-    {
-        the_answer is_42{42};
-        the_answer is_what{};
+  {
+    the_answer is_42{42};
+    the_answer is_what{};
 
-        is_what = std::move(is_42);
-    }
+    is_what = std::move(is_42);
+  }
 
-    return 0;
+  return 0;
 }
 
 // failed to move

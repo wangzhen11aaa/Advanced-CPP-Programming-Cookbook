@@ -32,7 +32,6 @@ include(ExternalProject)
 # ------------------------------------------------------------------------------
 # Recipe 01
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe01_examples)
 
 list(APPEND HAYAI_CMAKE_ARGS
@@ -45,7 +44,6 @@ ExternalProject_Add(
     GIT_SHALLOW 1
     CMAKE_ARGS ${HAYAI_CMAKE_ARGS}
 )
-
 include_directories(${CMAKE_BINARY_DIR}/external/include/hayai)
 
 function(example number)
@@ -62,7 +60,6 @@ example(02)
 # ------------------------------------------------------------------------------
 # Recipe 02
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe02_examples)
 
 function(example number)
@@ -81,7 +78,6 @@ example(05)
 # ------------------------------------------------------------------------------
 # Recipe 03
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe03_examples)
 
 function(example number)
@@ -102,7 +98,6 @@ example(07)
 # ------------------------------------------------------------------------------
 # Recipe 04
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe04_examples)
 
 function(example number)

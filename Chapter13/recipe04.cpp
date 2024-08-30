@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,13 +22,13 @@
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
+#include <algorithm>
 #include <iostream>
-#include <range/v3/algorithm/count.hpp>
+#include <vector>
 
-int main(void)
-{
-    auto list = {4, 8, 15, 16, 23, 42};
-    std::cout << ranges::count(list, 42) << '\n';
+int main(void) {
+  auto list = std::vector<int>{{4, 8, 15, 16, 23, 42}};
+  std::cout << std::ranges::count(list.begin(), list.end(), 42) << '\n';
 }
 
 #endif
@@ -36,15 +36,14 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE02
 
+#include <algorithm>
 #include <iostream>
-#include <range/v3/algorithm/find.hpp>
-
-int main(void)
-{
-    auto list = {4, 8, 15, 16, 23, 42};
-    if (auto i = ranges::find(list, 42); i != ranges::end(list)) {
-        std::cout << *i << '\n';
-    }
+namespace ranges = std::ranges;
+int main(void) {
+  auto list = {4, 8, 15, 16, 23, 42};
+  if (auto i = ranges::find(list, 42); i != ranges::end(list)) {
+    std::cout << *i << '\n';
+  }
 }
 
 #endif
@@ -52,15 +51,14 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE03
 
+#include <algorithm>
 #include <iostream>
-#include <range/v3/algorithm/find.hpp>
-
-int main(void)
-{
-    int list[] = {4, 8, 15, 16, 23, 42};
-    if (auto i = ranges::find(list, 42); i != ranges::end(list)) {
-        std::cout << *i << '\n';
-    }
+int main(void) {
+  namespace ranges = std::ranges;
+  int list[] = {4, 8, 15, 16, 23, 42};
+  if (auto i = ranges::find(list, 42); i != ranges::end(list)) {
+    std::cout << *i << '\n';
+  }
 }
 
 #endif
@@ -68,18 +66,15 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE04
 
+#include <algorithm>
 #include <iostream>
-#include <range/v3/algorithm/for_each.hpp>
+int main(void) {
+  namespace ranges = std::ranges;
+  auto list = {4, 8, 15, 16, 23, 42};
 
-int main(void)
-{
-    auto list = {4, 8, 15, 16, 23, 42};
+  ranges::for_each(list, [](const int &val) { std::cout << val << ' '; });
 
-    ranges::for_each(list, [](const int &val){
-        std::cout << val << ' ';
-    });
-
-    std::cout << '\n';
+  std::cout << '\n';
 }
 
 #endif
@@ -87,38 +82,33 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE05
 
+#include <algorithm>
 #include <iostream>
-#include <range/v3/view/transform.hpp>
-
-class my_type
-{
-    int m_i;
+#include <vector>
+#
+class my_type {
+  int m_i;
 
 public:
-    my_type(int i) :
-        m_i{i}
-    { }
+  my_type(int i) : m_i{i} {}
 
-    auto get() const
-    {
-        return m_i;
-    }
+  auto get() const { return m_i; }
 };
 
-int main(void)
-{
-    using namespace ranges::views;
+int main(void) {
+  namespace ranges = std::ranges;
+  using namespace ranges::views;
 
-    auto list1 = {4, 8, 15, 16, 23, 42};
-    auto list2 = list1 | transform([](int val){
-        return my_type(val);
-    });
+  auto list1 = {4, 8, 15, 16, 23, 42};
+  std::vector<my_type> list2(list1.size(), 0);
+  std::transform(list1.begin(), list1.end(), list2.begin(),
+                 [](int val) { return my_type(val); });
 
-    for(const auto &elem : list2) {
-        std::cout << elem.get() << ' ';
-    }
+  for (const auto &elem : list2) {
+    std::cout << elem.get() << ' ';
+  }
 
-    std::cout << '\n';
+  std::cout << '\n';
 }
 
 #endif
@@ -126,22 +116,20 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE06
 
-#include <vector>
+#include <algorithm>
 #include <iostream>
-#include <range/v3/action/sort.hpp>
+#include <vector>
 
-int main(void)
-{
-    using namespace ranges;
+int main(void) {
+  namespace ranges = std::ranges;
+  std::vector<int> list = {4, 42, 15, 8, 23, 16};
+  // list |= actions::sort;
 
-    std::vector<int> list = {4, 42, 15, 8, 23, 16};
-    list |= actions::sort;
+  for (const auto &elem : list) {
+    std::cout << elem << ' ';
+  }
 
-    for(const auto &elem : list) {
-        std::cout << elem << ' ';
-    }
-
-    std::cout << '\n';
+  std::cout << '\n';
 }
 
 #endif

@@ -32,7 +32,6 @@ include(ExternalProject)
 # ------------------------------------------------------------------------------
 # Sanatizer Flags
 # ------------------------------------------------------------------------------
-
 set(CMAKE_C_FLAGS_ASAN "-fsanitize=address -fno-optimize-sibling-calls -fsanitize-address-use-after-scope -fno-omit-frame-pointer -g -O1")
 set(CMAKE_CXX_FLAGS_ASAN "-fsanitize=address -fno-optimize-sibling-calls -fsanitize-address-use-after-scope -fno-omit-frame-pointer -g -O1")
 
@@ -42,13 +41,13 @@ set(CMAKE_CXX_FLAGS_UBSAN "-fsanitize=undefined")
 # ------------------------------------------------------------------------------
 # Recipe 01
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe01_examples)
 
 list(APPEND CATCH_CMAKE_ARGS
     -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/
 )
 
+message("Begin clone Catch2")
 ExternalProject_Add(
     catch
     GIT_REPOSITORY https://github.com/catchorg/Catch2.git
@@ -78,7 +77,6 @@ example(08)
 # ------------------------------------------------------------------------------
 # Recipe 02
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe02_examples)
 
 function(example number)
@@ -96,7 +94,6 @@ example(05)
 # ------------------------------------------------------------------------------
 # Recipe 03
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe03_examples)
 
 function(example number)
@@ -114,7 +111,6 @@ example(04)
 # ------------------------------------------------------------------------------
 # Recipe 04
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe04_examples)
 
 function(example number)

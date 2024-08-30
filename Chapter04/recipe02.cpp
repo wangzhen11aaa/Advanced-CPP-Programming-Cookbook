@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,32 +24,22 @@
 
 #include <iostream>
 
-struct the_answer
-{ };
+struct the_answer {};
 
-void foo2(const the_answer &is)
-{
-    std::cout << "l-value\n";
-}
+void foo2(const the_answer &is) { std::cout << "l-value\n"; }
 
-void foo2(the_answer &&is)
-{
-    std::cout << "r-value\n";
-}
+void foo2(the_answer &&is) { std::cout << "r-value\n"; }
 
-template<typename T>
-void foo1(T &&t)
-{
-    foo2(t);
-}
+template <typename T> void foo1(T &&t) { foo2(t); }
 
-int main(void)
-{
-    the_answer is;
-    foo1(is);
-    foo1(the_answer());
+int main(void) {
+  the_answer is;
+  foo1(is);
+  foo1(the_answer());
+  foo2(is);
+  foo2(the_answer());
 
-    return 0;
+  return 0;
 }
 
 // l-value
@@ -62,32 +52,19 @@ int main(void)
 
 #include <iostream>
 
-struct the_answer
-{ };
+struct the_answer {};
 
-void foo2(const the_answer &is)
-{
-    std::cout << "l-value\n";
-}
+void foo2(const the_answer &is) { std::cout << "l-value\n"; }
 
-void foo2(the_answer &&is)
-{
-    std::cout << "r-value\n";
-}
+void foo2(the_answer &&is) { std::cout << "r-value\n"; }
 
-template<typename T>
-void foo1(T &&t)
-{
-    foo2(std::forward<T>(t));
-}
+template <typename T> void foo1(T &&t) { foo2(std::forward<T>(t)); }
 
-int main(void)
-{
-    the_answer is;
-    foo1(is);
-    foo1(the_answer());
-
-    return 0;
+int main(void) {
+  the_answer is;
+  foo1(is);
+  foo1(the_answer());
+  return 0;
 }
 
 // l-value
@@ -100,32 +77,24 @@ int main(void)
 
 #include <iostream>
 
-struct the_answer
-{ };
+struct the_answer {};
 
-void foo2(const the_answer &is, int i)
-{
-    std::cout << "l-value: " << i << '\n';
+void foo2(const the_answer &is, int i) {
+  std::cout << "l-value: " << i << '\n';
 }
 
-void foo2(the_answer &&is, int i)
-{
-    std::cout << "r-value: " << i << '\n';
+void foo2(the_answer &&is, int i) { std::cout << "r-value: " << i << '\n'; }
+
+template <typename... Args> void foo1(Args &&...args) {
+  foo2(std::forward<Args>(args)...);
 }
 
-template<typename... Args>
-void foo1(Args &&...args)
-{
-    foo2(std::forward<Args>(args)...);
-}
+int main(void) {
+  the_answer is;
+  foo1(is, 42);
+  foo1(the_answer(), 42);
 
-int main(void)
-{
-    the_answer is;
-    foo1(is, 42);
-    foo1(the_answer(), 42);
-
-    return 0;
+  return 0;
 }
 
 // l-value

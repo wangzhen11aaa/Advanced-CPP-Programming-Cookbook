@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -23,42 +23,32 @@
 #ifdef EXAMPLE01
 
 #include <iostream>
-
-class spiderman
-{
+#include <string>
+class spiderman {
 public:
-    bool attack(int x, int) const
-    {
-        return x == 0 ? true : false;
-    }
+  bool attack(int x, int) const { return x == 0 ? true : false; }
+  std::string name() const { return std::string{"spiderman"}; }
 };
 
-class captain_america
-{
+class captain_america {
 public:
-    bool attack(int, int y) const
-    {
-        return y == 0 ? true : false;
-    }
+  bool attack(int, int y) const { return y == 0 ? true : false; }
+  std::string name() const { return std::string{"captain_america"}; }
 };
 
-template<typename T>
-auto attack(const T &t, int x, int y)
-{
-    if (t.attack(x, y)) {
-        std::cout << "hero won fight\n";
-    }
-    else {
-        std::cout << "hero lost the fight :(\n";
-    }
+template <typename T> auto attack(const T &t, int x, int y) {
+  if (t.attack(x, y)) {
+    std::cout << "hero " << t.name() << " won fight\n";
+  } else {
+    std::cout << "hero " << t.name() << "lost the fight :(\n";
+  }
 }
 
-int main(void)
-{
-    attack(spiderman{}, 0, 42);
-    attack(captain_america{}, 0, 42);
+int main(void) {
+  attack(spiderman{}, 0, 42);
+  attack(captain_america{}, 0, 42);
 
-    return 0;
+  return 0;
 }
 
 // hero won fight

@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,9 +22,7 @@
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
-int main(void)
-{
-}
+int main(void) {}
 
 // > valgrind ./recipe03_example01
 // ==8260== Memcheck, a memory error detector
@@ -75,10 +73,9 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE02
 
-int main(void)
-{
-    auto ptr = new int;
-    delete ptr;
+int main(void) {
+  auto ptr = new int;
+  delete ptr;
 }
 
 // > valgrind ./recipe03_example02
@@ -118,8 +115,9 @@ int main(void)
 // mem_stacks_B=0
 // heap_tree=peak
 // n2: 472704 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
-//  n0: 400000 0x401147: main (in /home/user/book/chapter06/build/recipe03_example02)
-//  n1: 72704 0x4922E89: ??? (in /usr/lib64/libstdc++.so.6.0.26)
+//  n0: 400000 0x401147: main (in
+//  /home/user/book/chapter06/build/recipe03_example02) n1: 72704 0x4922E89: ???
+//  (in /usr/lib64/libstdc++.so.6.0.26)
 //   n1: 72704 0x400FF59: call_init.part.0 (in /usr/lib64/ld-2.29.so)
 //    n1: 72704 0x4010060: _dl_init (in /usr/lib64/ld-2.29.so)
 //     n0: 72704 0x4001149: ??? (in /usr/lib64/ld-2.29.so)
@@ -133,11 +131,10 @@ int main(void)
 #include <vector>
 std::vector<int> data;
 
-int main(void)
-{
-    for (auto i = 0; i < 10000; i++) {
-        data.push_back(i);
-    }
+int main(void) {
+  for (auto i = 0; i < 10000; i++) {
+    data.push_back(i);
+  }
 }
 
 // > valgrind ./recipe03_example03
@@ -164,13 +161,12 @@ int main(void)
 #include <vector>
 std::vector<int> data;
 
-int main(void)
-{
-    data.reserve(10000);
+int main(void) {
+  data.reserve(10000);
 
-    for (auto i = 0; i < 10000; i++) {
-        data.push_back(i);
-    }
+  for (auto i = 0; i < 10000; i++) {
+    data.push_back(i);
+  }
 }
 
 // > valgrind ./recipe03_example04
@@ -199,10 +195,9 @@ int main(void)
 
 std::any data;
 
-int main(void)
-{
-    data = 42;
-    data = std::string{"The answer is: 42"};
+int main(void) {
+  data = 42;
+  data = std::string{"The answer is: 42"};
 }
 
 // > valgrind ./recipe03_example05
@@ -231,16 +226,15 @@ int main(void)
 
 std::any data;
 
-int main(void)
-{
-    data = 42;
-    data = std::string{"The answer is: 42"};
-    data = 42;
-    data = std::string{"The answer is: 42"};
-    data = 42;
-    data = std::string{"The answer is: 42"};
-    data = 42;
-    data = std::string{"The answer is: 42"};
+int main(void) {
+  data = 42;
+  data = std::string{"The answer is: 42"};
+  data = 42;
+  data = std::string{"The answer is: 42"};
+  data = 42;
+  data = std::string{"The answer is: 42"};
+  data = 42;
+  data = std::string{"The answer is: 42"};
 }
 
 // > valgrind ./recipe03_example06
@@ -264,15 +258,16 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE07
 
-#include <variant>
+#include <iostream>
 #include <string>
-
+#include <variant>
 std::variant<int, std::string> data;
 
-int main(void)
-{
-    data = 42;
-    data = std::string{"The answer is: 42"};
+int main(void) {
+  data = 42;
+  std::cout << "data: " << std::get<0>(data) << std::endl;
+  data = std::string{"The answer is: 42"};
+  std::cout << "data: " << std::get<1>(data) << std::endl;
 }
 
 // > valgrind ./recipe03_example07

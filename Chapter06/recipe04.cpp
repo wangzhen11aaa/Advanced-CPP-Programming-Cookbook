@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,32 +21,25 @@
 
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
-
-class myclass
-{
-    int answer;
+#include <iostream>
+#include <stdexcept>
+class myclass {
+  int answer;
 
 public:
-    ~myclass()
-    {
-        answer = 42;
-    }
+  ~myclass() { answer = 42; }
 };
 
-void foo()
-{
-    throw 42;
-}
+void foo() { throw 42; }
 
-int main(void)
-{
-    myclass c;
+int main(void) {
+  myclass c;
 
-    try {
-        foo();
-    }
-    catch (...) {
-    }
+  try {
+    foo();
+  } catch (const std::exception &e) {
+    std::cout << e.what() << std::endl;
+  }
 }
 
 // > objdump -d ./recipe04_example01 | awk '/main>:/,/ret/'
@@ -60,31 +53,22 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE02
 
-class myclass
-{
-    int answer;
+class myclass {
+  int answer;
 
 public:
-    ~myclass()
-    {
-        answer = 42;
-    }
+  ~myclass() { answer = 42; }
 };
 
-void foo()
-{
-    throw 42;
-}
+void foo() { throw 42; }
 
-int main(void) noexcept
-{
-    myclass c;
+int main(void) noexcept {
+  myclass c;
 
-    try {
-        foo();
-    }
-    catch (...) {
-    }
+  try {
+    foo();
+  } catch (...) {
+  }
 }
 
 // > objdump -d ./recipe04_example02 | awk '/main>:/,/ret/'

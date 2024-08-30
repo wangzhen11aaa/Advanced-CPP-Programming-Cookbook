@@ -26,13 +26,14 @@
 cmake_minimum_required(VERSION 3.6)
 project(chapter13)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+add_compile_options("-fms-extensions")
 include(ExternalProject)
 
 list(APPEND RANGES_CMAKE_ARGS
     -DCMAKE_INSTALL_PREFIX=${CMAKE_BINARY_DIR}/external/
-    -DCMAKE_BUILD_TYPE=Release
-    -DRANGES_CXX_STD=17
+    -DCMAKE_BUILD_TYPE=Debug
+    -DRANGES_CXX_STD=2a
 )
 
 ExternalProject_Add(
@@ -41,13 +42,11 @@ ExternalProject_Add(
     URL_MD5 c21b136fd414f3a655f059e5cf85ec93
     CMAKE_ARGS ${RANGES_CMAKE_ARGS}
 )
-
 include_directories(${CMAKE_BINARY_DIR}/external/include)
 
 # ------------------------------------------------------------------------------
 # Recipe 01
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe01_examples)
 
 function(example number)
@@ -58,11 +57,11 @@ endfunction(example)
 
 example(01)
 example(02)
+example(04)
 
 # ------------------------------------------------------------------------------
 # Recipe 02
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe02_examples)
 
 function(example number)
@@ -77,7 +76,6 @@ example(03)
 # ------------------------------------------------------------------------------
 # Recipe 03
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe03_examples)
 
 function(example number)
@@ -96,7 +94,6 @@ example(06)
 # ------------------------------------------------------------------------------
 # Recipe 04
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe04_examples)
 
 function(example number)
@@ -116,7 +113,6 @@ example(06)
 # ------------------------------------------------------------------------------
 # Recipe 05
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe05_examples)
 
 function(example number)

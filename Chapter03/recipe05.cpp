@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,44 +24,43 @@
 
 #include <iostream>
 
-class copy_or_move
-{
+class copy_or_move {
 public:
-
-    copy_or_move() = default;
+  copy_or_move() = default;
+  int x{1};
 
 public:
+  copy_or_move(copy_or_move &&other) noexcept { *this = std::move(other); }
 
-    copy_or_move(copy_or_move &&other) noexcept
-    {
-        *this = std::move(other);
-    }
+  copy_or_move &operator=(copy_or_move &&other) noexcept {
+    std::cout << "move\n";
+    return *this;
+  }
 
-    copy_or_move &operator=(copy_or_move &&other) noexcept
-    {
-        std::cout << "move\n";
-        return *this;
-    }
+  copy_or_move(const copy_or_move &other) { *this = other; }
 
-    copy_or_move(const copy_or_move &other)
-    {
-        *this = other;
-    }
-
-    copy_or_move &operator=(const copy_or_move &other)
-    {
-        std::cout << "copy\n";
-        return *this;
-    }
+  copy_or_move &operator=(const copy_or_move &other) {
+    std::cout << "copy\n";
+    return *this;
+  }
 };
 
-int main(void)
-{
-    const copy_or_move test1;
-    copy_or_move test2;
+int main(void) {
+  const copy_or_move test1;
+  copy_or_move test2;
 
-    test2 = std::move(test1);
-    return 0;
+  test2 = std::move(test1);
+
+  copy_or_move test11;
+  copy_or_move test22;
+
+  test22 = std::move(test11);
+
+  // test const_cast
+  auto test1_1 = const_cast<copy_or_move &>(test1);
+  test1_1.x = 2;
+  std::cout << test1.x << '\t' << test1_1.x << std::endl;
+  return 0;
 }
 
 // copy

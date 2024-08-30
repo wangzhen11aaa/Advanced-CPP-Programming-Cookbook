@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,22 +24,20 @@
 
 // Contents of library.h
 
-namespace library_name
-{
-    int my_api() { return 42; }
-    // ...
-}
+namespace library_name {
+int my_api() { return 42; }
+// ...
+} // namespace library_name
 
 // Contents of main.cpp
 
 #include <iostream>
 
-int main(void)
-{
-    using namespace library_name;
+int main(void) {
+  using namespace library_name;
 
-    std::cout << "The answer is: " << my_api() << '\n';
-    return 0;
+  std::cout << "The answer is: " << my_api() << '\n';
+  return 0;
 }
 
 // The answer is: 42
@@ -51,24 +49,23 @@ int main(void)
 
 // Contents of library.h
 
-namespace library_name
-{
-    namespace details { inline int answer = 42; }
-
-    int my_api() { return details::answer; }
-    // ...
+namespace library_name {
+namespace details {
+inline int answer = 42;
 }
+
+int my_api() { return details::answer; }
+// ...
+} // namespace library_name
 
 // Contents of main.cpp
 
 #include <iostream>
 
-int main(void)
-{
-    using namespace library_name;
+int main(void) {
 
-    std::cout << "The answer is: " << my_api() << '\n';
-    return 0;
+  std::cout << "The answer is: " << library_name::my_api() << '\n';
+  return 0;
 }
 
 // The answer is: 42

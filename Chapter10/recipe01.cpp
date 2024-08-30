@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,10 +22,9 @@
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
-int main(void)
-{
-    auto ptr = new int;
-    *ptr = 42;
+int main(void) {
+  auto ptr = new int;
+  *ptr = 42;
 }
 
 #endif
@@ -33,12 +32,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE02
 
-int main(void)
-{
-    auto p = new int;
-    delete p;
+int main(void) {
+  auto p = new int;
+  delete p;
 
-    delete p;
+  delete p;
 }
 
 #endif
@@ -46,12 +44,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE03
 
-int main(void)
-{
-    auto p = new int;
-    delete p;
+int main(void) {
+  auto p = new int;
+  delete p;
 
-    *p = 42;
+  *p = 42;
 }
 
 #endif
@@ -61,10 +58,9 @@ int main(void)
 
 #include <memory>
 
-int main(void)
-{
-    auto ptr = std::make_unique<int>();
-    *ptr = 42;
+int main(void) {
+  auto ptr = std::make_unique<int>();
+  *ptr = 42;
 }
 
 #endif
@@ -72,13 +68,12 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE05
 
-#include <memory>
 #include <iostream>
+#include <memory>
 
-int main(void)
-{
-    auto ptr = std::make_unique<int[]>(100);
-    ptr[0] = 42;
+int main(void) {
+  auto ptr = std::make_unique<int[]>(100);
+  ptr[0] = 42;
 }
 
 #endif
@@ -88,32 +83,28 @@ int main(void)
 
 #include <array>
 #include <atomic>
-#include <thread>
 #include <iostream>
+#include <thread>
 
 std::atomic<int> count;
 
-void inc(int *val)
-{
-    count += *val;
-}
+void inc(int *val) { count += *val; }
 
-int main(void)
-{
-    auto ptr = std::make_unique<int>(1);
-    std::array<std::thread, 42> threads;
+int main(void) {
+  auto ptr = std::make_unique<int>(1);
+  std::array<std::thread, 42> threads;
 
-    for (auto &thread : threads) {
-        thread = std::thread{inc, ptr.get()};
-    }
+  for (auto &thread : threads) {
+    thread = std::thread{inc, ptr.get()};
+  }
 
-    for (auto &thread : threads) {
-        thread.join();
-    }
+  for (auto &thread : threads) {
+    thread.join();
+  }
 
-    std::cout << "count: " << count << '\n';
+  std::cout << "count: " << count << '\n';
 
-    return 0;
+  return 0;
 }
 
 // count: 42
@@ -125,35 +116,31 @@ int main(void)
 
 #include <array>
 #include <atomic>
-#include <thread>
 #include <iostream>
+#include <thread>
 
 std::atomic<int> count;
 
-void inc(int *val)
-{
-    count += *val;
-}
+void inc(int *val) { count += *val; }
 
-int main(void)
-{
-    std::array<std::thread, 42> threads;
+int main(void) {
+  std::array<std::thread, 42> threads;
 
-    {
-        auto ptr = std::make_unique<int>(1);
-
-        for (auto &thread : threads) {
-            thread = std::thread{inc, ptr.get()};
-        }
-    }
+  {
+    auto ptr = std::make_unique<int>(1);
 
     for (auto &thread : threads) {
-        thread.join();
+      thread = std::thread{inc, ptr.get()};
     }
+  }
 
-    std::cout << "count: " << count << '\n';
+  for (auto &thread : threads) {
+    thread.join();
+  }
 
-    return 0;
+  std::cout << "count: " << count << '\n';
+
+  return 0;
 }
 
 // count: 32579929
@@ -165,35 +152,31 @@ int main(void)
 
 #include <array>
 #include <atomic>
-#include <thread>
 #include <iostream>
-
+#include <memory>
+#include <thread>
 std::atomic<int> count;
 
-void inc(std::shared_ptr<int> val)
-{
-    count += *val;
-}
+void inc(std::shared_ptr<int> val) { count += *val; }
 
-int main(void)
-{
-    std::array<std::thread, 42> threads;
+int main(void) {
+  std::array<std::thread, 42> threads;
 
-    {
-        auto ptr = std::make_shared<int>(1);
-
-        for (auto &thread : threads) {
-            thread = std::thread{inc, ptr};
-        }
-    }
+  {
+    auto ptr = std::make_shared<int>(1);
 
     for (auto &thread : threads) {
-        thread.join();
+      thread = std::thread{inc, ptr};
     }
+  }
 
-    std::cout << "count: " << count << '\n';
+  for (auto &thread : threads) {
+    thread.join();
+  }
 
-    return 0;
+  std::cout << "count: " << count << '\n';
+
+  return 0;
 }
 
 // count: 42

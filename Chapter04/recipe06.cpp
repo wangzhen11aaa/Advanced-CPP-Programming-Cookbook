@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -24,16 +24,13 @@
 
 #include <iostream>
 
-template<int answer>
-void foo()
-{
-    std::cout << "The answer is: " << answer << '\n';
+template <int answer> void foo() {
+  std::cout << "The answer is: " << answer << '\n';
 }
 
-int main(void)
-{
-    foo<42>();
-    return 0;
+int main(void) {
+  foo<42>();
+  return 0;
 }
 
 // The answer is: 42
@@ -45,17 +42,14 @@ int main(void)
 
 #include <iostream>
 
-template<auto answer>
-void foo()
-{
-    std::cout << "The answer is: " << answer << '\n';
+template <auto answer> void foo() {
+  std::cout << "The answer is: " << answer << '\n';
 }
 
-int main(void)
-{
-    foo<42>();
-    foo<42U>();
-    return 0;
+int main(void) {
+  foo<42>();
+  foo<42U>();
+  return 0;
 }
 
 // The answer is: 42
@@ -69,19 +63,15 @@ int main(void)
 #include <iostream>
 #include <type_traits>
 
-template<
-    auto answer,
-    std::enable_if_t<std::is_integral_v<decltype(answer)>, int> = 0
-    >
-void foo()
-{
-    std::cout << "The answer is: " << answer << '\n';
+template <auto answer,
+          std::enable_if_t<std::is_integral_v<decltype(answer)>, int> = 0>
+void foo() {
+  std::cout << "The answer is: " << answer << '\n';
 }
 
-int main(void)
-{
-    foo<42>();
-    return 0;
+int main(void) {
+  foo<42>();
+  return 0;
 }
 
 // The answer is: 42

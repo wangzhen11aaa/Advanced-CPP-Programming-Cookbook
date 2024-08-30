@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -21,36 +21,26 @@
 
 #include <iostream>
 
-template <typename T>
-constexpr auto type_info()
-{
-    std::string_view name{__PRETTY_FUNCTION__};
-    name.remove_prefix(37);
-    name.remove_suffix(1);
-    return name;
+template <typename T> constexpr auto type_info() {
+  std::string_view name{__PRETTY_FUNCTION__};
+  name.remove_prefix(37);
+  name.remove_suffix(1);
+  return name;
 }
 
-#define show_type(a)                            \
-    std::cout << #a                             \
-              << " = "                          \
-              << type_info<decltype(a)>()       \
-              << '\n';                          \
+#define show_type(a)                                                           \
+  std::cout << #a << " = " << type_info<decltype(a)>() << '\n';
 
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
-template<typename T>
-void foo(T t)
-{
-    show_type(t);
-}
+template <typename T> void foo(T t) { show_type(t); }
 
-int main(void)
-{
-    int i = 42;
+int main(void) {
+  int i = 42;
 
-    foo(i);
-    foo(42);
+  foo(i);
+  foo(42);
 }
 
 #endif
@@ -58,16 +48,12 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE02
 
-template<typename T>
-void foo(const T &t)
-{
-    show_type(t);
-}
+template <typename T> void foo(const T &t) { show_type(t); }
 
-int main(void)
-{
-    int i = 42;
-    foo(i);
+int main(void) {
+  int i = 42;
+  foo(42);
+  foo(i);
 }
 
 #endif
@@ -75,16 +61,12 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE03
 
-template<typename T>
-void foo(T &t)
-{
-    show_type(t);
-}
+template <typename T> void foo(T &t) { show_type(t); }
 
-int main(void)
-{
-    int i = 42;
-    foo(i);
+int main(void) {
+  int i = 42;
+  // foo(42);
+  foo(i);
 }
 
 #endif
@@ -92,16 +74,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE04
 
-template<typename T>
-void foo(T &&t)
-{
-    show_type(t);
-}
+template <typename T> void foo(T &&t) { show_type(t); }
 
-int main(void)
-{
-    int i = 42;
-    foo(i);
+int main(void) {
+  int i = 42;
+  foo(i);
 }
 
 #endif
@@ -109,15 +86,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE05
 
-void foo(int &&t)
-{
-    show_type(t);
-}
+void foo(int &&t) { show_type(t); }
 
-int main(void)
-{
-    int i = 42;
-    foo(std::move(i));
+int main(void) {
+  int i = 42;
+  foo(std::move(i));
 }
 
 #endif
@@ -125,16 +98,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE06
 
-template<typename T>
-void foo(T &&t)
-{
-    show_type(t);
-}
+template <typename T> void foo(T &&t) { show_type(t); }
 
-int main(void)
-{
-    auto &&i = 42;
-    foo<decltype(i)>(std::move(i));
+int main(void) {
+  auto &&i = 42;
+  foo<decltype(i)>(std::move(i));
 }
 
 #endif
@@ -142,16 +110,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE07
 
-template<typename T>
-void foo(T &&t)
-{
-    show_type(t);
-}
+template <typename T> void foo(T &&t) { show_type(t); }
 
-int main(void)
-{
-    const int i = 42;
-    foo(i);
+int main(void) {
+  const int i = 42;
+  foo(i);
 }
 
 #endif
@@ -159,16 +122,11 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE08
 
-template<typename T>
-void foo(const T &&t)
-{
-    show_type(t);
-}
+template <typename T> void foo(const T &&t) { show_type(t); }
 
-int main(void)
-{
-    const int i = 42;
-    foo(std::move(i));
+int main(void) {
+  const int i = 42;
+  foo(std::move(i));
 }
 
 #endif
@@ -176,15 +134,8 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE09
 
-template<typename T, size_t N>
-void foo(T (&&t)[N])
-{
-    show_type(t);
-}
+template <typename T, size_t N> void foo(T (&&t)[N]) { show_type(t); }
 
-int main(void)
-{
-    foo({4, 8, 15, 16, 23, 42});
-}
+int main(void) { foo({4, 8, 15, 16, 23, 42}); }
 
 #endif

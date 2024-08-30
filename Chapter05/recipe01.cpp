@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -22,30 +22,28 @@
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE01
 
-#include <thread>
-#include <string>
 #include <iostream>
+#include <string>
+#include <thread>
 
-void foo()
-{
-    static std::string msg{"The answer is: 42\n"};
-    while(true) {
-        for (const auto &c : msg) {
-            std::clog << c;
-        }
+void foo() {
+  static std::string msg{"The answer is: 42\n"};
+  while (true) {
+    for (const auto &c : msg) {
+      std::clog << c;
     }
+  }
 }
 
-int main(void)
-{
-    std::thread t1{foo};
-    std::thread t2{foo};
+int main(void) {
+  std::thread t1{foo};
+  std::thread t2{foo};
 
-    t1.join();
-    t2.join();
+  t1.join();
+  t2.join();
 
-    // Never reached
-    return 0;
+  // Never reached
+  return 0;
 }
 
 // The answer is:he 42
@@ -62,35 +60,33 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE02
 
-#include <mutex>
-#include <thread>
-#include <string>
 #include <iostream>
+#include <mutex>
+#include <string>
+#include <thread>
 
 std::mutex m{};
 
-void foo()
-{
-    static std::string msg{"The answer is: 42\n"};
-    while(true) {
-        m.lock();
-        for (const auto &c : msg) {
-            std::clog << c;
-        }
-        m.unlock();
+void foo() {
+  static std::string msg{"The answer is: 42\n"};
+  while (true) {
+    m.lock();
+    for (const auto &c : msg) {
+      std::clog << c;
     }
+    m.unlock();
+  }
 }
 
-int main(void)
-{
-    std::thread t1{foo};
-    std::thread t2{foo};
+int main(void) {
+  std::thread t1{foo};
+  std::thread t2{foo};
 
-    t1.join();
-    t2.join();
+  t1.join();
+  t2.join();
 
-    // Never reached
-    return 0;
+  // Never reached
+  return 0;
 }
 
 // The answer is: 42
@@ -110,21 +106,17 @@ int main(void)
 
 std::mutex m{};
 
-void foo()
-{
-    m.lock();
-}
+void foo() { m.lock(); }
 
-int main(void)
-{
-    std::thread t1{foo};
-    std::thread t2{foo};
+int main(void) {
+  std::thread t1{foo};
+  std::thread t2{foo};
 
-    t1.join();
-    t2.join();
+  t1.join();
+  t2.join();
 
-    // Never reached
-    return 0;
+  // Never reached
+  return 0;
 }
 
 #endif
@@ -133,27 +125,24 @@ int main(void)
 #ifdef EXAMPLE04
 
 #include <array>
-#include <mutex>
-#include <thread>
-#include <string>
 #include <iostream>
+#include <mutex>
+#include <string>
 
 std::mutex m{};
-std::array<int,6> numbers{4,8,15,16,23,42};
+std::array<int, 6> numbers{4, 8, 15, 16, 23, 42};
 
-int foo(int index)
-{
-    m.lock();
-    auto element = numbers.at(index);
-    m.unlock();
+int foo(int index) {
+  m.lock();
+  auto element = numbers.at(index);
+  m.unlock();
 
-    return element;
+  return element;
 }
 
-int main(void)
-{
-    std::cout << "The answer is: " << foo(5) << '\n';
-    return 0;
+int main(void) {
+  std::cout << "The answer is: " << foo(5) << '\n';
+  return 0;
 }
 
 // The answer is: 42
@@ -163,34 +152,32 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE05
 
+#include <iostream>
 #include <mutex>
 #include <thread>
-#include <iostream>
 
 std::mutex m{};
 
-void foo()
-{
-    static std::string msg{"The answer is: 42\n"};
+void foo() {
+  static std::string msg{"The answer is: 42\n"};
 
-    while(true) {
-        std::lock_guard lock(m);
-        for (const auto &c : msg) {
-            std::clog << c;
-        }
+  while (true) {
+    std::lock_guard lock(m);
+    for (const auto &c : msg) {
+      std::clog << c;
     }
+  }
 }
 
-int main(void)
-{
-    std::thread t1{foo};
-    std::thread t2{foo};
+int main(void) {
+  std::thread t1{foo};
+  std::thread t2{foo};
 
-    t1.join();
-    t2.join();
+  t1.join();
+  t2.join();
 
-    // Never reached
-    return 0;
+  // Never reached
+  return 0;
 }
 
 // The answer is: 42
@@ -205,33 +192,31 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE06
 
-#include <mutex>
-#include <thread>
-#include <string>
 #include <iostream>
+#include <mutex>
+#include <string>
+#include <thread>
 
 std::recursive_mutex m{};
 
-void foo()
-{
-    m.lock();
-    m.lock();
+void foo() {
+  m.lock();
+  m.lock();
 
-    std::cout << "The answer is: 42\n";
+  std::cout << "The answer is: 42\n";
 
-    m.unlock();
-    m.unlock();
+  m.unlock();
+  m.unlock();
 }
 
-int main(void)
-{
-    std::thread t1{foo};
-    std::thread t2{foo};
+int main(void) {
+  std::thread t1{foo};
+  std::thread t2{foo};
 
-    t1.join();
-    t2.join();
+  t1.join();
+  t2.join();
 
-    return 0;
+  return 0;
 }
 
 // The answer is: 42
@@ -242,51 +227,51 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE07
 
+#include <iostream>
 #include <mutex>
 #include <shared_mutex>
 #include <thread>
-#include <iostream>
 
 int count_rw{};
 const auto &count_ro = count_rw;
 
 std::shared_mutex m{};
 
-void reader()
-{
-    while(true) {
-        std::shared_lock lock(m);
-        if (count_ro >= 42) {
-            return;
-        }
+void reader() {
+  while (true) {
+    std::shared_lock lock(m);
+    std::cout << "thread_id: " << std::this_thread::get_id() << std::endl;
+    std::cout << "count_ro: " << count_ro << std::endl;
+    if (count_ro >= 42) {
+      return;
     }
+  }
 }
 
-void writer()
-{
-    while(true) {
-        std::unique_lock lock(m);
-        if (++count_rw == 100) {
-            return;
-        }
+void writer() {
+  while (true) {
+    std::unique_lock lock(m);
+    std::cout << "count_rw: " << count_ro << std::endl;
+    if (++count_rw == 100) {
+      return;
     }
+  }
 }
 
-int main(void)
-{
-    std::thread t1{reader};
-    std::thread t2{reader};
-    std::thread t3{reader};
-    std::thread t4{reader};
-    std::thread t5{writer};
+int main(void) {
+  std::thread t1{reader};
+  std::thread t2{reader};
+  //   std::thread t3{reader};
+  //   std::thread t4{reader};
+  std::thread t5{writer};
 
-    t1.join();
-    t2.join();
-    t3.join();
-    t4.join();
-    t5.join();
+  t1.join();
+  t2.join();
+  //   t3.join();
+  //   t4.join();
+  t5.join();
 
-    return 0;
+  return 0;
 }
 
 #endif
@@ -294,33 +279,30 @@ int main(void)
 // -----------------------------------------------------------------------------
 #ifdef EXAMPLE08
 
+#include <iostream>
 #include <mutex>
 #include <thread>
-#include <iostream>
 
 std::timed_mutex m{};
 
-void foo()
-{
-    using namespace std::chrono;
+void foo() {
+  using namespace std::chrono;
 
-    if (m.try_lock_for(seconds(1))) {
-        std::cout << "lock acquired\n";
-    }
-    else {
-        std::cout << "lock failed\n";
-    }
+  if (m.try_lock_for(seconds(1))) {
+    std::cout << "lock acquired\n";
+  } else {
+    std::cout << "lock failed\n";
+  }
 }
 
-int main(void)
-{
-    std::thread t1{foo};
-    std::thread t2{foo};
+int main(void) {
+  std::thread t1{foo};
+  std::thread t2{foo};
 
-    t1.join();
-    t2.join();
+  t1.join();
+  t2.join();
 
-    return 0;
+  return 0;
 }
 
 // lock acquired

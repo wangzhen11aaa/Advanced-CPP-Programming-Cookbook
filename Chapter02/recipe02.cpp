@@ -8,8 +8,8 @@
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in all
-// copies or substantial portions of the Software.
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -28,16 +28,12 @@
 #include <iostream>
 #include <stdexcept>
 
-void foo()
-{
-    std::cout << "The answer is: 42\n";
-}
+void foo() { std::cout << "The answer is: 42\n"; }
 
-int main(void)
-{
-    std::cout << std::boolalpha;
-    std::cout << "could foo throw: " << !noexcept(foo()) << '\n';
-    return 0;
+int main(void) {
+  std::cout << std::boolalpha;
+  std::cout << "could foo throw: " << !noexcept(foo()) << '\n';
+  return 0;
 }
 
 // could foo throw: true
@@ -50,34 +46,21 @@ int main(void)
 #include <iostream>
 #include <stdexcept>
 
-void foo1()
-{
-    std::cout << "The answer is: 42\n";
-}
+void foo1() { std::cout << "The answer is: 42\n"; }
 
-void foo2()
-{
-    throw std::runtime_error("The answer is: 42");
-}
+void foo2() { throw std::runtime_error("The answer is: 42"); }
 
-void foo3() noexcept
-{
-    std::cout << "The answer is: 42\n";
-}
+void foo3() noexcept { std::cout << "The answer is: 42\n"; }
 
-void foo4() noexcept
-{
-    throw std::runtime_error("The answer is: 42");
-}
+void foo4() noexcept { throw std::runtime_error("The answer is: 42"); }
 
-int main(void)
-{
-    std::cout << std::boolalpha;
-    std::cout << "could foo throw: " << !noexcept(foo1()) << '\n';
-    std::cout << "could foo throw: " << !noexcept(foo2()) << '\n';
-    std::cout << "could foo throw: " << !noexcept(foo3()) << '\n';
-    std::cout << "could foo throw: " << !noexcept(foo4()) << '\n';
-    return 0;
+int main(void) {
+  std::cout << std::boolalpha;
+  std::cout << "could foo throw: " << !noexcept(foo1()) << '\n';
+  std::cout << "could foo throw: " << !noexcept(foo2()) << '\n';
+  std::cout << "could foo throw: " << !noexcept(foo3()) << '\n';
+  std::cout << "could foo throw: " << !noexcept(foo4()) << '\n';
+  return 0;
 }
 
 // could foo throw: true
@@ -93,15 +76,9 @@ int main(void)
 #include <iostream>
 #include <stdexcept>
 
-void foo()
-{
-    throw std::runtime_error("The answer is: 42");
-}
+void foo() { throw std::runtime_error("The answer is: 42"); }
 
-int main(void)
-{
-    foo();
-}
+int main(void) { foo(); }
 
 // terminate called after throwing an instance of 'std::runtime_error'
 //   what():  The answer is: 42
@@ -115,23 +92,17 @@ int main(void)
 #include <iostream>
 #include <stdexcept>
 
-void foo()
-{
-    throw std::runtime_error("The answer is: 42");
-}
+void foo() { throw std::runtime_error("The answer is: 42"); }
 
-int main(void)
-{
-    if constexpr(noexcept(foo())) {
-        foo();
+int main(void) {
+  if constexpr (noexcept(foo())) {
+    foo();
+  } else {
+    try {
+      foo();
+    } catch (...) {
     }
-    else {
-        try {
-            foo();
-        }
-        catch (...)
-        { }
-    }
+  }
 }
 
 #endif
@@ -142,23 +113,17 @@ int main(void)
 #include <iostream>
 #include <stdexcept>
 
-void foo() noexcept
-{
-    throw std::runtime_error("The answer is: 42");
-}
+void foo() noexcept { throw std::runtime_error("The answer is: 42"); }
 
-int main(void)
-{
-    if constexpr(noexcept(foo())) {
-        foo();
+int main(void) {
+  if constexpr (noexcept(foo())) {
+    foo();
+  } else {
+    try {
+      foo();
+    } catch (...) {
     }
-    else {
-        try {
-            foo();
-        }
-        catch (...)
-        { }
-    }
+  }
 }
 
 // terminate called after throwing an instance of 'std::runtime_error'
@@ -173,21 +138,14 @@ int main(void)
 #include <iostream>
 #include <stdexcept>
 
-void foo1()
-{
-    std::cout << "The answer is: 42\n";
-}
+void foo1() { std::cout << "The answer is: 42\n"; }
 
-void foo2() noexcept(noexcept(foo1()))
-{
-    foo1();
-}
+void foo2() noexcept(noexcept(foo1())) { foo1(); }
 
-int main(void)
-{
-    std::cout << std::boolalpha;
-    std::cout << "could foo throw: " << !noexcept(foo1()) << '\n';
-    std::cout << "could foo throw: " << !noexcept(foo2()) << '\n';
+int main(void) {
+  std::cout << std::boolalpha;
+  std::cout << "could foo throw: " << !noexcept(foo1()) << '\n';
+  std::cout << "could foo throw: " << !noexcept(foo2()) << '\n';
 }
 
 // could foo throw: true
@@ -196,4 +154,3 @@ int main(void)
 #endif
 
 #pragma GCC diagnostic pop
-

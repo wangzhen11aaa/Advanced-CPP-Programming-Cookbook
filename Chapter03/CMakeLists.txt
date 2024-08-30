@@ -25,13 +25,12 @@
 
 cmake_minimum_required(VERSION 3.6)
 project(chapter03)
-
+set(CMAKE_CXX_FLAGS "-g")
 set(CMAKE_CXX_STANDARD 17)
 
 # ------------------------------------------------------------------------------
 # Recipe 01
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe01_examples)
 
 function(example number)
@@ -48,7 +47,6 @@ example(04)
 # ------------------------------------------------------------------------------
 # Recipe 02
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe02_examples)
 
 function(example number)
@@ -63,7 +61,6 @@ example(02)
 # ------------------------------------------------------------------------------
 # Recipe 03
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe03_examples)
 
 function(example number)
@@ -73,15 +70,16 @@ function(example number)
 endfunction(example)
 
 example(01)
+
 if(DEFINED BUILD_RECIPE03_EXAMPLE02)
     example(02)
 endif()
+
 example(03)
 
 # ------------------------------------------------------------------------------
 # Recipe 04
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe04_examples)
 
 function(example number)
@@ -96,7 +94,6 @@ example(01)
 # ------------------------------------------------------------------------------
 # Recipe 05
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe05_examples)
 
 function(example number)
@@ -110,7 +107,6 @@ example(01)
 # ------------------------------------------------------------------------------
 # Recipe 06
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe06_examples)
 
 function(example number)
@@ -124,7 +120,6 @@ example(01)
 # ------------------------------------------------------------------------------
 # Recipe 07
 # ------------------------------------------------------------------------------
-
 add_custom_target(recipe07_examples)
 
 function(example number)
@@ -134,6 +129,7 @@ function(example number)
 endfunction(example)
 
 example(01)
+
 if(DEFINED BUILD_RECIPE07_EXAMPLE02)
     example(02)
 endif()
@@ -141,6 +137,5 @@ endif()
 # ------------------------------------------------------------------------------
 # Silence
 # ------------------------------------------------------------------------------
-
 set(ignore "${BUILD_RECIPE03_EXAMPLE02}")
 set(ignore "${BUILD_RECIPE07_EXAMPLE02}")
